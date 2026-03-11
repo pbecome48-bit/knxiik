@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gurren Lagann Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            background: black;
+            color: #fff;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #welcomeScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #000000, #110022);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 10;
+        }
+
+            #welcomeScreen h1 {
+                font-size: 2.5em;
+                margin-bottom: 20px;
+                color: #ff6f61;
+                text-shadow: 0 0 15px #ff0033, 0 0 30px #ffcc00;
+            }
+
+            #welcomeScreen input {
+                padding: 10px 15px;
+                margin: 10px;
+                font-size: 1em;
+                border-radius: 10px;
+                border: none;
+                width: 200px;
+            }
+
+        #startBtn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff0033, #ffcc00);
+            color: #000;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            #startBtn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 30px #ffcc00, 0 0 50px #ff0033;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Экран приветствия с логином и паролем -->
+    <div id="welcomeScreen">
+        <h1>Вход в мир Gurren Lagann</h1>
+        <input type="text" id="username" placeholder="Логин">
+        <input type="password" id="password" placeholder="Пароль">
+        <button id="startBtn">Войти</button>
+    </div>
+
+    <!-- Музыка -->
+    <audio id="bgMusic" loop>
+        <source src="music/spiral_music.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <!-- Анимация звезд -->
+    <canvas id="stars"></canvas>
+
+    <script>
+        // Анимация звезд
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let stars = [];
+        for (let i = 0; i < 300; i++) {
+            stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, z: Math.random() * canvas.width });
+        }
+        function drawStars() {
+            ctx.fillStyle = "black"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "white";
+            for (let i = 0; i < stars.length; i++) {
+                let s = stars[i]; let k = 128 / s.z;
+                let px = s.x * k + canvas.width / 2; let py = s.y * k + canvas.height / 2;
+                if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+                    let size = (1 - s.z / canvas.width) * 3; ctx.fillRect(px, py, size, size);
+                }
+                s.z -= 2;
+                if (s.z <= 0) { s.z = canvas.width; s.x = Math.random() * canvas.width - canvas.width / 2; s.y = Math.random() * canvas.height - canvas.height / 2; }
+            }
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        // Логика кнопки
+        const startBtn = document.getElementById('startBtn');
+        const music = document.getElementById('bgMusic');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        startBtn.addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) {
+                music.play();
+                welcomeScreen.style.display = 'none';
+                window.location.href = "main.html";  // переход на главную страницу
+            } else {
+                alert("Введите логин и пароль!");
+            }
+        });
+    </script>
+
+</body>
+</html>
+

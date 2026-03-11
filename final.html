@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Финал</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            background: black;
+            color: white;
+            overflow: hidden;
+            font-family: Arial;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url("https://i.imgur.com/YKY28eT.png");
+            animation: starsMove 60s linear infinite;
+        }
+
+        @keyframes starsMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 1000px;
+            }
+        }
+
+        .credits {
+            position: absolute;
+            bottom: -100%;
+            width: 100%;
+            text-align: center;
+            font-size: 28px;
+            animation: scrollCredits 25s linear forwards;
+        }
+
+        @keyframes scrollCredits {
+            from {
+                bottom: -100%;
+            }
+
+            to {
+                bottom: 100%;
+            }
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 40px;
+        }
+
+        button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg,#ff0033,#ffcc00);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- МУЗЫКА ФИНАЛА -->
+    <audio autoplay loop>
+        <source src="music/spiral_music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="stars"></div>
+
+    <div class="credits">
+
+        <h1>Спасибо за посещение нашего сайта</h1>
+
+        <p>Gurren Lagann Fan Project</p>
+
+        <br>
+
+        <p>Создатель сайта</p>
+        <p>Isagi</p>
+
+        <br>
+
+        <p>Спасибо за просмотр</p>
+
+        <br><br>
+
+        <h1>THE END</h1>
+
+    </div>
+
+    <button onclick="window.location.href='index.html'">
+        Начать заново
+    </button>
+
+</body>
+</html>

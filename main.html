@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron',sans-serif;
+            overflow: hidden;
+            background: black;
+            color: #fff;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+            header h1 {
+                font-size: 3em;
+                color: #ff6f61;
+                text-shadow: 0 0 15px #ff0033,0 0 30px #ffcc00;
+                animation: pulse 2s infinite alternate;
+            }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #ff0033;
+            border-radius: 15px;
+            padding: 20px;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 0 15px #ffcc00;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: scale(1.1) rotate(3deg);
+                box-shadow: 0 0 30px #ffcc00,0 0 50px #ff0033;
+            }
+
+            .card img {
+                width: 100%;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+
+        #nextPage {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 50px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg,#ff0033,#ffcc00);
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            #nextPage:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 30px #ffcc00,0 0 50px #ff0033;
+            }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            background: rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="music/spiral_music.mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="stars"></canvas>
+
+    <header>
+        <h1>Добро пожаловать в мир Gurren Lagann!</h1>
+    </header>
+
+    <div class="content">
+        <div class="card">
+            <img src="Images/arcGurren.png" alt="Саймон и Камина">
+            <h3>Саймон и Камина</h3>
+            <p>Герои, которые вдохновляют на победу!</p>
+        </div>
+        <div class="card">
+            <img src="Images/gurren.png" alt="Робот Лаганн">
+            <h3>Лаганн</h3>
+            <p>Символ силы и решимости!</p>
+        </div>
+        <div class="card">
+            <img src="Images/gurrenLagann.png" alt="Gurren Lagann">
+            <h3>Главный постер</h3>
+            <p>Эпическая история, которая вдохновляет!</p>
+        </div>
+    </div>
+
+    <button id="nextPage" onclick="window.location.href='third.html'">Перейти дальше</button>
+
+    <footer>© 2026 Gurren Lagann Fan Page</footer>
+
+    <script>
+        const canvas = document.getElementById('stars'); const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let stars = []; for (let i = 0; i < 300; i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, z: Math.random() * canvas.width }); }
+        function drawStars() {
+            ctx.fillStyle = "black"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "white";
+            for (let s of stars) {
+                let k = 128 / s.z; let px = s.x * k + canvas.width / 2; let py = s.y * k + canvas.height / 2;
+                if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) { let size = (1 - s.z / canvas.width) * 3; ctx.fillRect(px, py, size, size); }
+                s.z -= 2; if (s.z <= 0) { s.z = canvas.width; s.x = Math.random() * canvas.width - canvas.width / 2; s.y = Math.random() * canvas.height - canvas.height / 2; }
+            }
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+    </script>
+
+</body>
+</html>
